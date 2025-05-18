@@ -1,0 +1,61 @@
+# Root-level docker-compose.yml
+
+services:
+  # auth-service:
+  #   build: ./services/auth-service
+  #   ports:
+  #     - "5000:5000"
+  #   environment:
+  #     - DB_HOST=auth-db
+  #     - DB_USER=postgres
+  #     - DB_PASS=postgres
+  #     - DB_NAME=authdb
+  #     - JWT_SECRET=your_secret
+  #   depends_on:
+  #     - auth-db
+
+  auth-db:
+    image: postgres:15
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: authdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - auth_data:/var/lib/postgresql/data
+
+  # todo-service:
+  #   build: ./services/todo-service
+  #   ports:
+  #     - "5001:5001"
+  #   environment:
+  #     - DB_HOST=todo-db
+  #     - DB_USER=postgres
+  #     - DB_PASS=postgres
+  #     - DB_NAME=tododb
+  #     - JWT_SECRET=your_secret
+  #   depends_on:
+  #     - todo-db
+
+  todo-db:
+    image: postgres:15
+    restart: always
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_DB: tododb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - todo_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer:latest
+    ports:
+      - 8080:8080
+    
+volumes:
+  auth_data:
+  todo_data:
