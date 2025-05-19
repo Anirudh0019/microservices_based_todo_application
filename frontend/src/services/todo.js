@@ -12,3 +12,5 @@ TODO_API.interceptors.request.use((config) => {
 
 export const getTodos = () => TODO_API.get('/todos');
 export const createTodo = (todo) => TODO_API.post('/todos', todo);
+export const deleteTodo = (id) => TODO_API.delete(`/todos/${id}`);
+export const updateTodo = (id, todo) => TODO_API.put(`/todos/${id}`, todo);
