@@ -29,18 +29,19 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      {error && <div className="error-message">{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
+    
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 m-4">
+      <h2 className='text-4xl'>Login</h2>
+      {error && <div className="text-red-600">{error}</div>}
+      <form onSubmit={handleSubmit} className='flex flex-col items-center'>
+        <div className="border-2 m-2">
           <input 
             placeholder="Username" 
             value={form.username} 
             onChange={(e) => setForm({ ...form, username: e.target.value })} 
           />
         </div>
-        <div className="form-group">
+        <div className="border-2">
           <input 
             placeholder="Password" 
             type="password" 
@@ -48,7 +49,7 @@ export default function Login() {
             onChange={(e) => setForm({ ...form, password: e.target.value })} 
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" className='bg-black text-white align-middle items-center mt-2'>Login</button>
       </form>
     </div>
   );
