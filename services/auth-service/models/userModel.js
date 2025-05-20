@@ -1,6 +1,7 @@
 const db = require('../db');
 
 async function createUserTableIfNotExists() {
+  console.log("am i stuck")
   await db.query(`
     CREATE TABLE IF NOT EXISTS users (
       id SERIAL PRIMARY KEY,
