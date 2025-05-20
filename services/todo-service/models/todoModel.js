@@ -8,7 +8,8 @@ async function createTodoTableIfNotExists() {
       title VARCHAR(255) NOT NULL,
       description TEXT,
       completed BOOLEAN DEFAULT FALSE,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      deadline_at DATE 
     )
   `);
 }
@@ -18,11 +19,12 @@ async function getTodosByUser(username) {
   return result.rows;
 }
 
-async function addTodo(username, title, description) {
+async function addTodo(username, title, description,date) {
   const result = await db.query(
-    'INSERT INTO todos (username, title, description) VALUES ($1, $2, $3) RETURNING *',
-    [username, title, description]
+    'INSERT INTO todos (username, title, description,deadline_at) VALUES ($1, $2, $3,$4) RETURNING *',
+    [username, title, description, date]
   );
+  console.log(username+" "+  title + " " + description+" "+date);
   return result.rows[0];
 }
 

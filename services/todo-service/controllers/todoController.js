@@ -12,7 +12,7 @@ exports.getTodos = async (req, res) => {
 
 exports.addTodo = async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { title, description, date } = req.body;
     
     if (!title) {
       return res.status(400).json({ message: 'Title is required' });
@@ -21,7 +21,8 @@ exports.addTodo = async (req, res) => {
     const newTodo = await todoModel.addTodo(
       req.user.username,
       title,
-      description || ''
+      description || '',
+      date || null
     );
     
     res.status(201).json(newTodo);
