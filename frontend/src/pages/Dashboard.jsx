@@ -16,13 +16,16 @@ export default function Dashboard() {
   useEffect(() => {
     fetchTodos();
   }, []);
-
   const handleAddOrUpdate = async () => {
     if (!form.title.trim()) return;
     if (isEditMode) {
+      console.log(form);
       await updateTodo(editId, form);
+      console.log("await UPDATE todo")
     } else {
-      await createTodo(form);
+      console.log("create todo")
+      createTodo(form);
+      // console.log(form);
     }
     resetForm();
     fetchTodos();
@@ -37,7 +40,7 @@ export default function Dashboard() {
     setForm({
       title: todo.title,
       description: todo.description || '',
-      reminder: todo.reminder || false,
+      // reminder: todo.reminder || false,
       date: todo.date || '',
     });
     setEditId(todo.id);
