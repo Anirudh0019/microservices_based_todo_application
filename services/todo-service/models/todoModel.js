@@ -19,6 +19,13 @@ async function getTodosByUser(username) {
   return result.rows;
 }
 
+async function getCompletedTodosByUser(username){
+  const result = await db.query("SELECT * FROM todos WHERE username = $1 AND completed = '1' ORDER BY created_at DESC", [username]);
+  return result.rows;
+}
+
+
+
 async function addTodo(username, title, description,date) {
   const result = await db.query(
     'INSERT INTO todos (username, title, description,deadline_at) VALUES ($1, $2, $3,$4) RETURNING *',
@@ -28,17 +35,19 @@ async function addTodo(username, title, description,date) {
   return result.rows[0];
 }
 
+
 async function updateTodo(id, username, updates) {
   const fields = [];
   const values = [id, username];
   let index = 3;
-  const {title,description,date} = updates;
+  const {title,description,date,completed} = updates;
 
   const deadline_at = date;
   const new_obj={
     title: title,
     description: description,
-    deadline_at: date
+    deadline_at: date,
+    completed: completed
   }
 
   console.log(new_obj);
@@ -65,6 +74,7 @@ async function deleteTodo(id, username) {
 module.exports = {
   createTodoTableIfNotExists,
   getTodosByUser,
+  getCompletedTodosByUser,
   addTodo,
   updateTodo,
   deleteTodo,

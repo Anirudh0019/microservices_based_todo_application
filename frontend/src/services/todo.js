@@ -15,4 +15,5 @@ export const createTodo = (todo) => {
   TODO_API.post('/todos', todo)
 };
 export const deleteTodo = (id) => TODO_API.delete(`/todos/${id}`);
-export const updateTodo = (id, todo) => TODO_API.patch(`/todos/${id}`, todo);
+export const updateTodo = (id, todo) => TODO_API.put(`/todos/${id}`, todo);
+export const getCompletedTodo= () => TODO_API.get('/todos/completed')
