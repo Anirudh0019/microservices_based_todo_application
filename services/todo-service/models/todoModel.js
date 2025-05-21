@@ -32,11 +32,24 @@ async function updateTodo(id, username, updates) {
   const fields = [];
   const values = [id, username];
   let index = 3;
+  const {title,description,date} = updates;
 
-  for (const [key, value] of Object.entries(updates)) {
+  const deadline_at = date;
+  const new_obj={
+    title: title,
+    description: description,
+    deadline_at: date
+  }
+
+  console.log(new_obj);
+
+  for (const [key, value] of Object.entries(new_obj)) {
+  
     fields.push(`${key} = $${index++}`);
     values.push(value);
+    
   }
+  console.log(values);
 
   const result = await db.query(
     `UPDATE todos SET ${fields.join(', ')} WHERE id = $1 AND username = $2 RETURNING *`,
