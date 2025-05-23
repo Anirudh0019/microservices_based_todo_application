@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const TODO_API = axios.create({
-  baseURL: 'http://localhost:5001',
+  baseURL: 'http://13.233.39.183:5001',
 });
 
 TODO_API.interceptors.request.use((config) => {
