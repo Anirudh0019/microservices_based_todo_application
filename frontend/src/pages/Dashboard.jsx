@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getTodos, createTodo, deleteTodo, updateTodo } from '../services/todo';
+import { getTodos, createTodo, deleteTodo, updateTodo, getCompletedTodo } from '../services/todo';
 
 export default function Dashboard() {
   const [todos, setTodos] = useState([]);
@@ -12,6 +12,22 @@ export default function Dashboard() {
     const res = await getTodos();
     setTodos(res.data);
   };
+  
+  const handleChecking =async(id) =>{
+    console.log(id);
+    console.log("inside handle check")
+    const todo = todos.find((todo) => todo.id === id);
+    if (todo) {
+      const updatedTodo = { ...todo, completed: !todo.completed };
+      console.log(updatedTodo);
+      await updateTodo(id, updatedTodo);
+      fetchTodos();
+    }else{
+      console.log("else condition in handleChecking func()")
+    }
+  }
+
+  console.log(todos);
 
   useEffect(() => {
     fetchTodos();
@@ -30,7 +46,7 @@ export default function Dashboard() {
     resetForm();
     fetchTodos();
   };
-
+  
   const handleDelete = async (id) => {
     await deleteTodo(id);
     fetchTodos();
@@ -69,12 +85,20 @@ export default function Dashboard() {
 
       <ul className="space-y-2">
         {todos.map((todo) => (
-          <li
+          (!todo.completed && 
+          (<li
             key={todo.id}
             className="flex justify-between items-center border px-3 py-2 rounded bg-white text-sm"
           >
             <div className="flex items-center gap-2">
-              <input type="checkbox" onChange={() => handleDelete(todo.id)} />
+              <input type="checkbox" onChange={() => {
+                // mark the task as completed in backend
+                // add this item to checkedTodos
+                // refersh both fetchtodo & fetchCompleted, sounds good
+                handleChecking(todo.id);
+              }} 
+              checked={todo.completed}
+              />
               <div>
                 <div className="font-medium">{todo.title}</div>
                 {todo.description && <div className="text-gray-500 text-xs">{todo.description}</div>}
@@ -86,7 +110,41 @@ export default function Dashboard() {
             >
               Edit
             </button>
-          </li>
+          </li>))
+        ))}
+      </ul>
+
+      <div className="flex justify-between items-center mt-6 mb-6">
+        <h1 className="text-2xl font-medium">Completed Todos</h1>
+      </div>
+      <ul className="space-y-2">
+        {todos.map((todo) => (
+          (todo.completed && 
+          (<li
+            key={todo.id}
+            className="flex justify-between items-center border px-3 py-2 rounded bg-white text-sm"
+          >
+            <div className="flex items-center gap-2">
+              <input type="checkbox" onChange={() => {
+                // mark the task as completed in backend
+                // add this item to checkedTodos
+                // refersh both fetchtodo & fetchCompleted, sounds good
+                handleChecking(todo.id);
+              }} 
+              checked={todo.completed}
+              />
+              <div>
+                <div className="font-medium">{todo.title}</div>
+                {todo.description && <div className="text-gray-500 text-xs">{todo.description}</div>}
+              </div>
+            </div>
+            <button
+              onClick={() => handleDelete(todo.id)}
+              className="text-xs border border-black px-2 py-1 rounded hover:bg-black hover:text-white"
+            >
+              Delete
+            </button>
+          </li>))
         ))}
       </ul>
 

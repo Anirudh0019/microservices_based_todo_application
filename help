@@ -1,0 +1,4 @@
+curl -X POST http://localhost:5001/todos \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3NDc4MDYzNDgsImV4cCI6MTc0NzgwOTk0OH0.Z3nIhBPish7yi3d_HUTTtMuGL9InvThFsMJFMrHVvMU" \
+  -d '{"title":"Finish setup", "description":"Build and test microservices"}'

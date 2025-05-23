@@ -10,6 +10,18 @@ exports.getTodos = async (req, res) => {
   }
 };
 
+exports.getCompletedTodos = async (req,res) => {
+  try {
+    console.log(req.user.username)
+    const userTodos = await todoModel.getCompletedTodosByUser(req.user.username);
+
+    res.json(userTodos);
+  } catch (err) {
+    console.error('Error fetching completed todos:', err);
+    res.status(500).json({ message: 'error while retreiving completed totods' });
+  }
+}
+
 exports.addTodo = async (req, res) => {
   try {
     const { title, description, date } = req.body;
@@ -34,9 +46,10 @@ exports.addTodo = async (req, res) => {
 
 exports.updateTodo = async (req, res) => {
   try {
+    // console.log(req.body.completed);
     const { id } = req.params;
     const updates = { ...req.body };
-    
+    console.log(updates);
     const updatedTodo = await todoModel.updateTodo(
       id,
       req.user.username,

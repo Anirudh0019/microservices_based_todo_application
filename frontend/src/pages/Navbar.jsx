@@ -11,7 +11,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="w-full border-b bg-white text-black px-6 py-4 flex justify-between items-center shadow-sm">
+    <nav className="w-full border-b-2  bg-white text-black px-6 py-4 flex justify-between items-center shadow-sm">
       <div className="text-xl font-semibold">TodoApp</div>
       <div className="space-x-4 text-sm">
         {token ? (
